@@ -1,0 +1,34 @@
+<script>
+  RED.nodes.registerType(
+    'network_stats',
+    {
+      category: 'performance',
+      color: '#58afe0',
+      defaults: {
+        name: {
+          value: ''
+        }
+      },
+      inputs: 1,
+      outputs: 1,
+      icon: 'network-stats.png',
+      label: function () {
+        return this.name || 'Network Stats'
+      },
+      oneditprepare: function () {
+        // select defaults
+      }
+    }
+  )
+</script>
+
+<script type="text/x-red" data-template-name="network_stats">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="network_stats">
+  <p>A node to monitor system network stats</p>
+</script>
