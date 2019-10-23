@@ -13,16 +13,23 @@ module.exports = function (RED) {
         .then(iface => {
           si.networkStats(iface)
             .then(data => {
-              let payloadArr = []
-              payloadArr.push({
-                payload: data.rx_sec,
-                topic: 'received_bytes_sec'
-              })
-              payloadArr.push({
-                payload: data.tx_sec,
-                topic: 'transfered_bytes_sec'
-              })
-              node.send([ payloadArr ])
+              for (let i = 0; i < data.length; i++) {
+                const ifaceData = data[i]
+                if (ifaceData.iface === iface) {
+                  let payloadArr = []
+                  payloadArr.push({
+                    payload: ifaceData.rx_sec,
+                    topic: 'received_bytes_sec'
+                  })
+                  payloadArr.push({
+                    payload: ifaceData.tx_sec,
+                    topic: 'transfered_bytes_sec'
+                  })
+                  node.send([ payloadArr ])
+
+                  break
+                }
+              }
             })
             .catch(err => {
               node.error('SI networkStats Error', err)
