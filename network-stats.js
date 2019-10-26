@@ -8,7 +8,8 @@ module.exports = function (RED) {
 
     const node = this
 
-    node.on('input', (msg) => {
+    node.on('input', (msg, send, done) => {
+      send = send || function() { node.send.apply(node,arguments) }
       si.networkInterfaceDefault()
         .then(iface => {
           si.networkStats(iface)
@@ -25,18 +26,26 @@ module.exports = function (RED) {
                     payload: ifaceData.tx_sec,
                     topic: 'transfered_bytes_sec'
                   })
-                  node.send([ payloadArr ])
+                  send([ payloadArr ])
 
                   break
                 }
               }
             })
             .catch(err => {
-              node.error('SI networkStats Error', err)
+              if (done) {
+                done(err)
+              } else {
+                node.error('SI networkStats Error', err)
+              }
             })
         })
         .catch(err => {
-          node.error('SI networkInterfaceDefault Error', err)
+          if (done) {
+            done(err)
+          } else {
+            node.error('SI networkInterfaceDefault Error', err)
+          }
         })
     })
   }
