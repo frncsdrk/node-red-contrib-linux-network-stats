@@ -7,6 +7,18 @@ node-red-contrib-linux-network-stats
 
 Linux is a registered trademark of Linus Torvalds.
 
-## Credits
+## Contributions
+
+see `CONTRIBUTING`
+
+## Dependencies
 
 [systeminformation](https://github.com/sebhildebrandt/systeminformation)
+
+## Credits
+
+see `CREDITS` file
+
+## License
+
+MIT (c) 2018 - 2019 frncsdrk and contributors
