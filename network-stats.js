@@ -9,7 +9,7 @@ module.exports = function (RED) {
     const node = this
 
     node.on('input', (msg, send, done) => {
-      send = send || function() { node.send.apply(node,arguments) }
+      send = send || function() { node.send.apply(node, arguments) }
       si.networkInterfaceDefault()
         .then(iface => {
           si.networkStats(iface)
