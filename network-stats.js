@@ -24,7 +24,7 @@ module.exports = function (RED) {
                   })
                   payloadArr.push({
                     payload: ifaceData.tx_sec,
-                    topic: 'transfered_bytes_sec'
+                    topic: 'transmitted_bytes_sec'
                   })
                   send([ payloadArr ])
 
