@@ -1,7 +1,12 @@
-node-red-contrib-linux-network-stats
-===
+# node-red-contrib-linux-network-stats
 
 > collect linux networks stats
+
+## Configuration
+
+### General
+
+- Name
 
 ## Copyright info
 
