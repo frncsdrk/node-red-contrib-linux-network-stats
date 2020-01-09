@@ -8,6 +8,11 @@
 
 - Name
 
+### Traffic
+
+- Received Bytes / sec
+- Transmitted Bytes / sec
+
 ## Copyright info
 
 Linux is a registered trademark of Linus Torvalds.

@@ -7,6 +7,12 @@
       defaults: {
         name: {
           value: ''
+        },
+        receivedBytesSec: {
+          value: true
+        },
+        transmittedBytesSec: {
+          value: true
         }
       },
       inputs: 1,
@@ -17,6 +23,13 @@
       },
       oneditprepare: function () {
         // select defaults
+        // traffic
+        if (typeof this.receivedBytesSec === 'undefined') {
+          $('#node-input-receivedBytesSec').prop('checked', true)
+        }
+        if (typeof this.transmittedBytesSec === 'undefined') {
+          $('#node-input-transmittedBytesSec').prop('checked', true)
+        }
       }
     }
   )
@@ -26,6 +39,16 @@
   <div class="form-row">
     <label for="node-input-name"><i class="icon-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <h4>Traffic</h4>
+  <div class="form-row">
+    <label for="node-input-receivedBytesSec" style="width: auto; margin-right: 1em;"><i class="icon-check"></i> Display received bytes per second</label>
+    <input type="checkbox" id="node-input-receivedBytesSec" style="display: inline-block; width: auto; vertical-align: top;">
+  </div>
+  <div class="form-row">
+    <label for="node-input-transmittedBytesSec" style="width: auto; margin-right: 1em;"><i class="icon-check"></i> Display transmitted bytes per second</label>
+    <input type="checkbox" id="node-input-transmittedBytesSec" style="display: inline-block; width: auto; vertical-align: top;">
   </div>
 </script>
 

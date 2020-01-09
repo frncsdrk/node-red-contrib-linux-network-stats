@@ -1,12 +1,26 @@
 module.exports = function (RED) {
   const si = require('systeminformation')
 
+  function aggregatePayloads (possiblePayloads, payloadArr) {
+    for (let i = 0; i < possiblePayloads.length; i++) {
+      const possiblePayloadsItem = possiblePayloads[i]
+      if (possiblePayloadsItem.condition) {
+        payloadArr.push(possiblePayloadsItem.result)
+      }
+    }
+
+    return payloadArr
+  }
+
   function NetworkStatsNode(conf) {
     RED.nodes.createNode(this, conf)
 
     this.name = conf.name
 
     const node = this
+
+    this.receivedBytesSec = (typeof conf.receivedBytesSec === 'undefined') ? true : conf.receivedBytesSec
+    this.transmittedBytesSec = (typeof conf.transmittedBytesSec  === 'undefined') ? true : conf.transmittedBytesSec
 
     node.on('input', (msg, send, done) => {
       send = send || function() { node.send.apply(node, arguments) }
@@ -18,14 +32,7 @@ module.exports = function (RED) {
                 const ifaceData = data[i]
                 if (ifaceData.iface === iface) {
                   let payloadArr = []
-                  payloadArr.push({
-                    payload: ifaceData.rx_sec,
-                    topic: 'received_bytes_sec'
-                  })
-                  payloadArr.push({
-                    payload: ifaceData.tx_sec,
-                    topic: 'transmitted_bytes_sec'
-                  })
+                  payloadArr = this.calculatePayloads(ifaceData, payloadArr)
                   send([ payloadArr ])
 
                   break
@@ -48,6 +55,27 @@ module.exports = function (RED) {
           }
         })
     })
+  }
+
+  NetworkStatsNode.prototype.calculatePayloads = function (data, payloadArr) {
+    const possiblePayloads = [
+      {
+        condition: this.receivedBytesSec,
+        result: {
+          payload: data.rx_sec,
+          topic: 'received_bytes_sec'
+        }
+      },
+      {
+        condition: this.transmittedBytesSec,
+        result: {
+          payload: data.tx_sec,
+          topic: 'transmitted_bytes_sec'
+        }
+      }
+    ]
+
+    return aggregatePayloads(possiblePayloads, payloadArr)
   }
 
   RED.nodes.registerType('network_stats', NetworkStatsNode)
