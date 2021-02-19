@@ -31,4 +31,4 @@ see `CREDITS` file
 
 ## License
 
-MIT (c) 2018 - 2020 frncsdrk and contributors
+MIT (c) 2018 - 2021 frncsdrk and contributors
