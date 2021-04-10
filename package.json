@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/frncsdrk/node-red-contrib-linux-network-stats#readme",
   "dependencies": {
-    "systeminformation": "^5.3.3"
+    "systeminformation": "^5.6.12"
   },
   "node-red": {
     "nodes": {
